@@ -11,27 +11,13 @@ pub struct Ticket {
 
 impl Ticket {
     pub fn new(title: String, description: String, status: String) -> Ticket {
-        if title.is_empty() {
-            panic!("Title cannot be empty");
-        }
-        if title.len() > 50 {
-            panic!("Title cannot be longer than 50 bytes");
-        }
-        if description.is_empty() {
-            panic!("Description cannot be empty");
-        }
-        if description.len() > 500 {
-            panic!("Description cannot be longer than 500 bytes");
-        }
-        if status != "To-Do" && status != "In Progress" && status != "Done" {
-            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
-        }
-
-        Ticket {
+        let ticket = Ticket {
             title,
             description,
             status,
-        }
+        };
+        ticket.check_rules();
+        return ticket;
     }
 
     pub fn title(&self) -> &String {
@@ -44,6 +30,39 @@ impl Ticket {
 
     pub fn status(&self) -> &String {
         &self.status
+    }
+
+    pub fn set_title(&mut self, title: String) {
+        self.title = title;
+        self.check_rules();
+    }
+
+    pub fn set_description(&mut self, description: String) {
+        self.description = description;
+        self.check_rules();
+    }
+
+    pub fn set_status(&mut self, status: String) {
+        self.status = status;
+        self.check_rules();
+    }
+
+    fn check_rules(&self) {
+        if self.title.is_empty() {
+            panic!("Title cannot be empty");
+        }
+        if self.title.len() > 50 {
+            panic!("Title cannot be longer than 50 bytes");
+        }
+        if self.description.is_empty() {
+            panic!("Description cannot be empty");
+        }
+        if self.description.len() > 500 {
+            panic!("Description cannot be longer than 500 bytes");
+        }
+        if self.status != "To-Do" && self.status != "In Progress" && self.status != "Done" {
+            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed");
+        }
     }
 }
 
