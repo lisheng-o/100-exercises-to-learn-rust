@@ -2,7 +2,20 @@
 //   When the description is invalid, instead, it should use a default description:
 //   "Description not provided".
 fn easy_ticket(title: String, description: String, status: Status) -> Ticket {
-    todo!()
+    match Ticket::new(title.clone(), description, status.clone()) {
+        Ok(t) => t,
+        Err(err) => {
+            if err == "Title cannot be empty" || err == "Title cannot be longer than 50 bytes"{
+                panic!("{}", err)
+            } else {
+                Ticket {
+                    title,
+                    description: "Description not provided".to_string(),
+                    status
+                }
+            }
+        }
+    }
 }
 
 #[derive(Debug, PartialEq, Clone)]
